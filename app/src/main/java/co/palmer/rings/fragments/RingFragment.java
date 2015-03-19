@@ -18,25 +18,24 @@ import java.util.Observer;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.palmer.rings.R;
+import co.palmer.rings.datamodels.Exercise;
 import co.palmer.rings.helpers.ChartTouchListener;
 import co.palmer.rings.viewmodels.RingViewModel;
 
 
 public class RingFragment extends Fragment implements OnChartGestureListener,Observer {
     public static final String VIEW_MODEL = "viewModel";
-    public static final String WORKOUT_NAME = "workoutName";
-    public static final String WORKOUT_REPS = "workoutReps";
+    public static final String EXERCISE = "exercise";
     private RingViewModel mRingViewModel;
     @InjectView(R.id.ring_chart)
     PieChart ringChart;
 
 
-    public static RingFragment newInstance(String workoutName, int workoutReps) {
+    public static RingFragment newInstance(Exercise exercise) {
         RingFragment ringFragment = new RingFragment();
-        Bundle workoutBundle = new Bundle();
-        workoutBundle.putString(WORKOUT_NAME, workoutName);
-        workoutBundle.putInt(WORKOUT_REPS, workoutReps);
-        ringFragment.setArguments(workoutBundle);
+        Bundle exerciseBundle = new Bundle();
+        exerciseBundle.putParcelable(EXERCISE, exercise);
+        ringFragment.setArguments(exerciseBundle);
         return ringFragment;
     }
 
@@ -48,9 +47,7 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState == null) {
-            mRingViewModel = new RingViewModel(
-                    getArguments().getString(WORKOUT_NAME),
-                    getArguments().getInt(WORKOUT_REPS));
+            mRingViewModel = new RingViewModel((Exercise)getArguments().getParcelable(EXERCISE));
         } else {
             mRingViewModel = savedInstanceState.getParcelable(VIEW_MODEL);
         }

@@ -12,6 +12,8 @@ import com.github.mikephil.charting.data.PieDataSet;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import co.palmer.rings.datamodels.Exercise;
+
 /**
  * File created by Thom Palmer on 2015-03-18.
  */
@@ -23,29 +25,26 @@ public class RingViewModel extends Observable implements Parcelable{
         add("Remaining Reps");
     }};
     private PieData mPieData;
-    private String workoutName;
     private String countDown;
     private String repCount;
-    private int workoutRest;
-    private int workoutSets;
+    private Exercise exercise;
     private int currentSet;
-    private int workoutReps;
     private int completedReps;
     private int remainingReps;
  
 
-    public RingViewModel(String workoutName, int remainingReps) {
-        this.workoutName = workoutName;
-        this.workoutReps = remainingReps;
-        this.remainingReps = remainingReps;
+    public RingViewModel(Exercise exercise) {
+        this.exercise = exercise;
+        this.remainingReps = exercise.getExerciseReps();
+        this.completedReps = 0;
         mPieData = new PieData(labels, generateChartData());
         setChanged();
         notifyObservers();
     }
 
     protected RingViewModel(Parcel in) {
-        this.workoutName = in.readString();
-        this.workoutReps = in.readInt();
+        this.exercise = in.readParcelable(Exercise.class.getClassLoader());
+        this.currentSet = in.readInt();
         this.remainingReps = in.readInt();
         this.completedReps = in.readInt();
     }
@@ -57,7 +56,7 @@ public class RingViewModel extends Observable implements Parcelable{
         ArrayList<Entry> entriesList = new ArrayList<Entry>();
         entriesList.add(completedRepsEntry);
         entriesList.add(totalRepsEntry);
-        PieDataSet pieDataSet = new PieDataSet(entriesList, workoutName);
+        PieDataSet pieDataSet = new PieDataSet(entriesList, exercise.getExerciseName());
         pieDataSet.setColors(colors);
         return pieDataSet;
     }
@@ -79,9 +78,9 @@ public class RingViewModel extends Observable implements Parcelable{
     
     public void completeSet() {
         completedReps = 0;
-        remainingReps = workoutReps;
+        remainingReps = exercise.getExerciseReps();
         currentSet++;
-        new CountDownTimer(workoutRest * 1000, 1000) {
+        new CountDownTimer(exercise.getExerciseRest() * 1000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -91,7 +90,7 @@ public class RingViewModel extends Observable implements Parcelable{
 
             @Override
             public void onFinish() {
-                if(currentSet < workoutSets) {
+                if(currentSet < exercise.getExerciseSets()) {
 
                 }
             }
@@ -131,8 +130,8 @@ public class RingViewModel extends Observable implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(workoutName);
-        dest.writeInt(workoutReps);
+        dest.writeParcelable(exercise, flags);
+        dest.writeInt(currentSet);
         dest.writeInt(remainingReps);
         dest.writeInt(completedReps);
     }
