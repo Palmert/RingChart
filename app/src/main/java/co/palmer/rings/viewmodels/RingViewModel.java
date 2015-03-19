@@ -1,9 +1,11 @@
 package co.palmer.rings.viewmodels;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Vibrator;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -28,13 +30,15 @@ public class RingViewModel extends Observable implements Parcelable{
     private String countDown;
     private String repCount;
     private Exercise exercise;
+    private Context context;
     private int currentSet;
     private int completedReps;
     private int remainingReps;
  
 
-    public RingViewModel(Exercise exercise) {
+    public RingViewModel(Exercise exercise, Context context) {
         this.exercise = exercise;
+        this.context = context;
         this.remainingReps = exercise.getExerciseReps();
         this.completedReps = 0;
         mPieData = new PieData(labels, generateChartData());
@@ -70,9 +74,9 @@ public class RingViewModel extends Observable implements Parcelable{
     }
     public void decreaseCompletedReps() {
         if(completedReps > 0) {
-            completedReps++;
+            completedReps--;
         }
-        remainingReps--;
+        remainingReps++;
         update();
     }
     
@@ -91,13 +95,19 @@ public class RingViewModel extends Observable implements Parcelable{
             @Override
             public void onFinish() {
                 if(currentSet < exercise.getExerciseSets()) {
-
+                    update();
+                    Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(new long[]{1000, 1000, 1000, 1000}, -1);
                 }
             }
             
         };
         update();
         countDownTimer.start();
+    }
+    
+    public void setContext(Context context) {
+        this.context = context;
     }
     
     public String getCountdown() { return countDown; }

@@ -47,9 +47,10 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState == null) {
-            mRingViewModel = new RingViewModel((Exercise)getArguments().getParcelable(EXERCISE));
+            mRingViewModel = new RingViewModel((Exercise)getArguments().getParcelable(EXERCISE), getActivity());
         } else {
             mRingViewModel = savedInstanceState.getParcelable(VIEW_MODEL);
+            mRingViewModel.setContext(getActivity());
         }
         mRingViewModel.addObserver(this);
     }
