@@ -1,6 +1,7 @@
 package co.palmer.rings.viewmodels;
 
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -15,18 +16,7 @@ import java.util.Observable;
  * File created by Thom Palmer on 2015-03-18.
  */
 public class RingViewModel extends Observable implements Parcelable{
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<RingViewModel> CREATOR = new Parcelable.Creator<RingViewModel>() {
-        @Override
-        public RingViewModel createFromParcel(Parcel in) {
-            return new RingViewModel(in);
-        }
-
-        @Override
-        public RingViewModel[] newArray(int size) {
-            return new RingViewModel[size];
-        }
-    };
+    private static final String COUNTDOWN = "countDown";
     private static final int [] colors = {Color.RED, Color.WHITE};
     private static final ArrayList<String> labels = new ArrayList<String>(){{
         add("Completed Reps");
@@ -34,10 +24,15 @@ public class RingViewModel extends Observable implements Parcelable{
     }};
     private PieData mPieData;
     private String workoutName;
+    private String countDown;
     private String repCount;
+    private int workoutRest;
+    private int workoutSets;
+    private int currentSet;
     private int workoutReps;
     private int completedReps;
     private int remainingReps;
+ 
 
     public RingViewModel(String workoutName, int remainingReps) {
         this.workoutName = workoutName;
@@ -68,23 +63,40 @@ public class RingViewModel extends Observable implements Parcelable{
     }
     
     public void increaseCompletedReps() {
-        completedReps += 1;
+        completedReps++;
         if(remainingReps > 0) {
-            remainingReps -= 1;
+            remainingReps--;
         }
         update();
     }
     public void decreaseCompletedReps() {
         if(completedReps > 0) {
-            completedReps -= 1;
+            completedReps++;
         }
-        remainingReps +=1;
+        remainingReps--;
         update();
     }
     
-    public void resetCompletedReps() {
+    public void completeSet() {
         completedReps = 0;
         remainingReps = workoutReps;
+        currentSet++;
+        new CountDownTimer(workoutRest * 1000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countDown = String.valueOf(millisUntilFinished / 1000);
+                update(COUNTDOWN);
+            }
+
+            @Override
+            public void onFinish() {
+                if(currentSet < workoutSets) {
+
+                }
+            }
+            
+        };
         update();
     }
     
@@ -100,6 +112,12 @@ public class RingViewModel extends Observable implements Parcelable{
         return completedReps;
     }
 
+    private void update(String updateType) {
+        mPieData.setDataSet(generateChartData());
+        setChanged();
+        notifyObservers(updateType);
+    }
+    
     private void update() {
         mPieData.setDataSet(generateChartData());
         setChanged();
@@ -118,4 +136,17 @@ public class RingViewModel extends Observable implements Parcelable{
         dest.writeInt(remainingReps);
         dest.writeInt(completedReps);
     }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<RingViewModel> CREATOR = new Parcelable.Creator<RingViewModel>() {
+        @Override
+        public RingViewModel createFromParcel(Parcel in) {
+            return new RingViewModel(in);
+        }
+
+        @Override
+        public RingViewModel[] newArray(int size) {
+            return new RingViewModel[size];
+        }
+    };
 }

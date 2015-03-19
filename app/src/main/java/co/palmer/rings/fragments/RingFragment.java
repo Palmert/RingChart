@@ -112,7 +112,7 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
 
     @Override
     public void onChartLongPressed(MotionEvent me) {
-        mRingViewModel.resetCompletedReps();
+        mRingViewModel.completeSet();
     }
 
     @Override
