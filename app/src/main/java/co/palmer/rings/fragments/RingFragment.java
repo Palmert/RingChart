@@ -55,6 +55,7 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
     }
 
     private void initializeRingChart() {
+        ringChart.setHoleRadius(80);
         ringChart.setDescription(null);
         ringChart.setTouchEnabled(true);
         ringChart.setUsePercentValues(true);
@@ -85,7 +86,7 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
         if(mRingViewModel.getCompletedReps() == 0) {
             ringChart.animateXY(1000, 1000);
         } else {
-            ringChart.animateX(100);
+            ringChart.animateY(100);
         }
     }
 
