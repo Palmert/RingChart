@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/thompalmer/Development/Android/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="/Users/thompalmer/Development/Android/Projects/RingChart/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-4e1a2ca5749d9250794742e91e45207a0e19f2b0.jar" />
+    </item>
+    <item
+        jar="/Users/thompalmer/Development/Android/Projects/RingChart/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="/Users/thompalmer/Development/Android/Projects/RingChart/app/build/intermediates/pre-dexed/debug/classes-2c0cc221814ffa4f4ee7a7b1a5d55b40a277d111.jar" />
+    </item>
+    <item
+        jar="/Users/thompalmer/Development/Android/Projects/RingChart/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="/Users/thompalmer/Development/Android/Projects/RingChart/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-ceff5d96165631dcdd5a90cbbe0d72d61faf4c6c.jar" />
+    </item>
+    <item
+        jar="/Users/thompalmer/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v2.0.8/a4900cefaf173fb8b416d2fe911394bac5a5ba4/MPAndroidChart-v2.0.8.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0a4900cefaf173fb8b416d2fe911394bac5a5ba4">
+        <dex dex="/Users/thompalmer/Development/Android/Projects/RingChart/app/build/intermediates/pre-dexed/debug/MPAndroidChart-v2.0.8-f062bd76c6d35d721dfc34273a4b80652be43e99.jar" />
+    </item>
+    <item
+        jar="/Users/thompalmer/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/6.1.0/63735f48b82bcd24cdd33821342428252eb1ca5a/butterknife-6.1.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="63735f48b82bcd24cdd33821342428252eb1ca5a">
+        <dex dex="/Users/thompalmer/Development/Android/Projects/RingChart/app/build/intermediates/pre-dexed/debug/butterknife-6.1.0-06993119b60d19e80d5457c2ead471bfe21aed62.jar" />
+    </item>
+    <item
+        jar="/Users/thompalmer/Development/Android/Projects/RingChart/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="/Users/thompalmer/Development/Android/Projects/RingChart/app/build/intermediates/pre-dexed/debug/classes-a8a2e4be85de3658103722fda3b917218aa56b38.jar" />
+    </item>
+
+</items>
