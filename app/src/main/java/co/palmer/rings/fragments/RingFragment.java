@@ -19,17 +19,25 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.palmer.rings.R;
 import co.palmer.rings.helpers.ChartTouchListener;
-import co.palmer.rings.models.RingViewModel;
+import co.palmer.rings.viewmodels.RingViewModel;
 
 
 public class RingFragment extends Fragment implements OnChartGestureListener,Observer {
+    public static final String VIEW_MODEL = "viewModel";
+    public static final String WORKOUT_NAME = "workoutName";
+    public static final String WORKOUT_REPS = "workoutReps";
     private RingViewModel mRingViewModel;
     @InjectView(R.id.ring_chart)
     PieChart ringChart;
 
 
-    public static RingFragment newInstance() {
-        return new RingFragment();
+    public static RingFragment newInstance(String workoutName, int workoutReps) {
+        RingFragment ringFragment = new RingFragment();
+        Bundle workoutBundle = new Bundle();
+        workoutBundle.putString(WORKOUT_NAME, workoutName);
+        workoutBundle.putInt(WORKOUT_REPS, workoutReps);
+        ringFragment.setArguments(workoutBundle);
+        return ringFragment;
     }
 
     public RingFragment() {
@@ -39,7 +47,14 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if(savedInstanceState == null) {
+            mRingViewModel = new RingViewModel(
+                    getArguments().getString(WORKOUT_NAME),
+                    getArguments().getInt(WORKOUT_REPS));
+        } else {
+            mRingViewModel = savedInstanceState.getParcelable(VIEW_MODEL);
+        }
+        mRingViewModel.addObserver(this);
     }
 
     @Override
@@ -48,8 +63,7 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
         View view = inflater.inflate(R.layout.fragment_ring, container, false);
         ButterKnife.inject(this, view);
         initializeRingChart();
-        mRingViewModel = new RingViewModel();
-        mRingViewModel.addObserver(this);
+       
         update(null, null);
         return view;
     }
@@ -88,6 +102,12 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
         } else {
             ringChart.animateY(100);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(VIEW_MODEL, mRingViewModel);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
