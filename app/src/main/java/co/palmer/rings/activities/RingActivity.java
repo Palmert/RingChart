@@ -8,8 +8,8 @@ import co.palmer.rings.fragments.RingFragment;
 
 
 public class RingActivity extends ActionBarActivity {
-    private String workout;
-    private int workoutReps;
+    private String workout = "Bench Press";
+    private int workoutReps = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
