@@ -80,7 +80,7 @@ public class RingViewModel extends Observable implements Parcelable{
         completedReps = 0;
         remainingReps = exercise.getExerciseReps();
         currentSet++;
-        new CountDownTimer(exercise.getExerciseRest() * 1000, 1000) {
+        CountDownTimer countDownTimer = new CountDownTimer(exercise.getExerciseRest() * 1000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -97,7 +97,10 @@ public class RingViewModel extends Observable implements Parcelable{
             
         };
         update();
+        countDownTimer.start();
     }
+    
+    public String getCountdown() { return countDown; }
     
     public PieData getmPieData() {
         return  mPieData;

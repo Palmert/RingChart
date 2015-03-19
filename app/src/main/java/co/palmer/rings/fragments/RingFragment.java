@@ -60,7 +60,6 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
         View view = inflater.inflate(R.layout.fragment_ring, container, false);
         ButterKnife.inject(this, view);
         initializeRingChart();
-       
         update(null, null);
         return view;
     }
@@ -92,13 +91,19 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
 
     @Override
     public void update(Observable observable, Object data) {
-        ringChart.setData(mRingViewModel.getmPieData());
-        ringChart.setCenterText(mRingViewModel.getRepCount());
-        if(mRingViewModel.getCompletedReps() == 0) {
-            ringChart.animateXY(1000, 1000);
+        if(data == null) {
+            ringChart.setData(mRingViewModel.getmPieData());
+            ringChart.setCenterText(mRingViewModel.getRepCount());
+            if (mRingViewModel.getCompletedReps() == 0) {
+                ringChart.animateXY(1000, 1000);
+            } else {
+                ringChart.animateY(100);
+            }
         } else {
-            ringChart.animateY(100);
+            ringChart.setCenterText(mRingViewModel.getCountdown());
+            ringChart.animateXY(1000, 1000);
         }
+            
     }
 
     @Override
