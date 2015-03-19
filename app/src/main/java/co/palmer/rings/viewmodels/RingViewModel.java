@@ -31,7 +31,7 @@ public class RingViewModel extends Observable implements Parcelable{
     private String repCount;
     private Exercise exercise;
     private Context context;
-    private int currentSet;
+    private int currentSet = 1;
     private int completedReps;
     private int remainingReps;
  
@@ -124,6 +124,8 @@ public class RingViewModel extends Observable implements Parcelable{
         return completedReps;
     }
 
+    public String getSetCount() {return String.format("%1$s/%2$s",currentSet, exercise.getExerciseSets()); }
+    
     private void update(String updateType) {
         mPieData.setDataSet(generateChartData());
         setChanged();

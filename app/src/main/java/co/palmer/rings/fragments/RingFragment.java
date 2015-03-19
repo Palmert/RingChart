@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
@@ -27,6 +28,8 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
     public static final String VIEW_MODEL = "viewModel";
     public static final String EXERCISE = "exercise";
     private RingViewModel mRingViewModel;
+    @InjectView(R.id.ring_txt_set_count)
+    TextView setCountTxt;
     @InjectView(R.id.ring_chart)
     PieChart ringChart;
 
@@ -66,6 +69,7 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
     }
 
     private void initializeRingChart() {
+
         ringChart.setHoleRadius(80);
         ringChart.setDescription(null);
         ringChart.setTouchEnabled(true);
@@ -75,7 +79,7 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
         ringChart.setCenterTextSize(getResources().getDimension(R.dimen.abc_text_size_headline_material));
         ringChart.setOnTouchListener(new ChartTouchListener(ringChart,this));
         ringChart.setOnChartGestureListener(this);
-        ringChart.setHoleColorTransparent(true);
+        ringChart.setHoleColor(Color.LTGRAY);
         ringChart.setRotationEnabled(false);
     }
 
@@ -95,6 +99,7 @@ public class RingFragment extends Fragment implements OnChartGestureListener,Obs
         if(data == null) {
             ringChart.setData(mRingViewModel.getmPieData());
             ringChart.setCenterText(mRingViewModel.getRepCount());
+            setCountTxt.setText(mRingViewModel.getSetCount());
             if (mRingViewModel.getCompletedReps() == 0) {
                 ringChart.animateXY(1000, 1000);
             } else {

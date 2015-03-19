@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.RingActivity"
-            android:label="@string/app_name" >
+            android:label="Exercise Tracker" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
